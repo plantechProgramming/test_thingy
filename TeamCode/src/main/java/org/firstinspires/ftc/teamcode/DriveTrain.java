@@ -13,7 +13,7 @@ public class DriveTrain {
         this.FR = FR;
     }
 
-    public void drive(double y, double x, double rx, double botHeading, double slowRatio){
+    public void drive(double y, double x, double rx, double botHeading){
 
         // slowRatio [0,1] - output power multiplier
 
@@ -31,18 +31,17 @@ public class DriveTrain {
         // Denominator is the largest motor power (absolute value) or 1
         // This ensures all the powers maintain the same ratio,
         // but only if at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-        double frontLeftPower = (rotY + rotX + rx) / denominator;
-        double backLeftPower = (rotY - rotX + rx) / denominator;
+        double frontLeftPower = (rotY + rotX + rx);
+        double backLeftPower = (rotY - rotX + rx);
 
-        double frontRightPower = (rotY - rotX - rx) / denominator;// before - rotX
-        double backRightPower = (rotY + rotX - rx) / denominator;// before + rotX
+        double frontRightPower = (rotY - rotX - rx);// before - rotX
+        double backRightPower = (rotY + rotX - rx);// before + rotX
 
-        FL.setPower(frontLeftPower * slowRatio);
-        BL.setPower(backLeftPower * slowRatio);
+        FL.setPower(frontLeftPower);
+        BL.setPower(backLeftPower);
 
-        FR.setPower(frontRightPower * slowRatio);
-        BR.setPower(backRightPower * slowRatio);
+        FR.setPower(frontRightPower);
+        BR.setPower(backRightPower);
 
     }
 

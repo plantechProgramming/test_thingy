@@ -19,7 +19,7 @@ public abstract class OpMode extends LinearOpMode {
     void initialize() {
 
         FL = hardwareMap.get(DcMotorEx.class, "FL");
-        FL.setDirection(DcMotorEx.Direction.REVERSE);
+        FL.setDirection(DcMotorEx.Direction.FORWARD);
         FL.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         FL.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         FL.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
@@ -31,7 +31,7 @@ public abstract class OpMode extends LinearOpMode {
         FR.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER );
 
         BL = hardwareMap.get(DcMotorEx.class, "BL");
-        BL.setDirection(DcMotorEx.Direction.REVERSE);
+        BL.setDirection(DcMotorEx.Direction.FORWARD);
         BL.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         BL.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         BL.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
