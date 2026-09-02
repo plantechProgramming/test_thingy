@@ -11,8 +11,10 @@ import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+import page.j5155.advantagescope.AdvantageScopeLite;
+
 public abstract class OpMode extends LinearOpMode {
-    protected DcMotorEx FL, FR, BL, BR;
+    protected DcMotorEx FL, FR, BL, BR, elevator;
 
     protected IMU Imu;
 
@@ -42,12 +44,18 @@ public abstract class OpMode extends LinearOpMode {
         BR.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         BR.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
+        elevator = hardwareMap.get(DcMotorEx.class, "elevator");
+        elevator.setDirection(DcMotorEx.Direction.REVERSE);
+        elevator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         Imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.RIGHT));
         Imu.initialize(parameters);
         Imu.resetYaw();
+
     }
 
 
