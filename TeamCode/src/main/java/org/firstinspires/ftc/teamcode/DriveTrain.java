@@ -15,13 +15,6 @@ public class DriveTrain {
 
     public void drive(double y, double x, double rx, double botHeading){
 
-        // slowRatio [0,1] - output power multiplier
-
-        FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
         // Rotate the movement direction counter to the bot's rotation
         double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
         double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
@@ -51,5 +44,14 @@ public class DriveTrain {
 
         FR.setPower(pow);
         BR.setPower(pow);
+    }
+
+    public void turnToAngle(double deg){
+
+//        FL.setPower(pow);
+//        BL.setPower(pow);
+//
+//        FR.setPower(-pow);
+//        BR.setPower(-pow);
     }
 }
