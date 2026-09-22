@@ -14,13 +14,19 @@ public class TeleOp extends OpMode{
 
     @Override
     protected void run() {
-        DriveTrain driveTrain = new DriveTrain(BR, BL, FR, FL);
+        DriveTrain driveTrain = new DriveTrain(BR, BL, FR, FL, telemetry, Imu);
         while (opModeIsActive()){
             gamepadForward = -gamepad1.left_stick_y;
             gamepadTurn = gamepad1.right_stick_x;
             gamepadDrift = gamepad1.left_stick_x;
             botHeading = Imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-            driveTrain.drive(gamepadForward, gamepadDrift, gamepadTurn, botHeading);
+            if(gamepad1.a){
+                driveTrain.turnToAngle(50);
+            }
+            else{
+                driveTrain.drive(gamepadForward, gamepadDrift, gamepadTurn, botHeading);
+            }
+            telemetry.update();
         }
     }
 

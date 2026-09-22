@@ -2,8 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import android.provider.Settings;
 
-import com.bylazar.camerastream.PanelsCameraStream;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.bylazar.panels.Panels;
+import com.bylazar.telemetry.PanelsTelemetry;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
@@ -49,8 +50,8 @@ public abstract class OpMode extends LinearOpMode {
         ll.pipelineSwitch(2);
         dashboard = FtcDashboard.getInstance();
         dashboard.startCameraStream(ll, 60);
+        telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry(), PanelsTelemetry.INSTANCE.getFtcTelemetry());
     }
-
 
     @Override
     public void runOpMode() throws InterruptedException {
