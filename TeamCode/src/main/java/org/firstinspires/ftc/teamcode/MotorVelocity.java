@@ -9,7 +9,7 @@ public class MotorVelocity {
     private double prevTime = 0;
     private double prevVelocity = 0;
     private final int MILLISECONDS_TO_MINUTE = 60000;
-    int ticksPerRevolution = 8192;
+    int ticksPerRevolution = 28;
 
     public double getRawVelocity(DcMotorEx motor) {
         long curEncoder = motor.getCurrentPosition();

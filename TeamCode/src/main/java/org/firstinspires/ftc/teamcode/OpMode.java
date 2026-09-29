@@ -22,7 +22,8 @@ import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 
 public abstract class OpMode extends LinearOpMode {
 
-    public DcMotorEx FL,BL,FR,BR;
+    public DcMotorEx FL,BL,FR,BR, shooterMotor;
+    public Servo sizeChanger;
     protected IMU Imu;
     public FtcDashboard dashboard;
     public Limelight3A ll;
@@ -38,6 +39,12 @@ public abstract class OpMode extends LinearOpMode {
         BR = hardwareMap.get(DcMotorEx.class, "BR");
         BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        shooterMotor = hardwareMap.get(DcMotorEx.class, "shooter");
+        shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooterMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        sizeChanger = hardwareMap.get(Servo.class, "shooter size changer");
 
         Imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
