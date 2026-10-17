@@ -17,11 +17,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Shooter {
     Telemetry telemetry;
     DcMotorEx shooter;
-    Servo sizeChanger;
-    public Shooter(Telemetry telemetry, DcMotorEx shooter, Servo sizeChanger){
+    Servo sizeChanger, servo;
+    public Shooter(Telemetry telemetry, DcMotorEx shooter, Servo sizeChanger, Servo servo){
         this.telemetry = telemetry;
         this.shooter = shooter;
         this.sizeChanger = sizeChanger;
+        this.servo = servo;
     }
     private static final ElapsedTime timer = new ElapsedTime();
     boolean prevMore = false;
@@ -60,6 +61,9 @@ public class Shooter {
         prevVel = vel;
         prevTime = time;
     }
+//    public void turret(double pow){
+//        servo.setPower(pow);
+//    }
     public void swichToPollen(){
         sizeChanger.setPosition(0);
     }

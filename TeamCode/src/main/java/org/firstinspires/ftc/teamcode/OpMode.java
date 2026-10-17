@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
@@ -23,10 +24,12 @@ import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 public abstract class OpMode extends LinearOpMode {
 
     public DcMotorEx FL,BL,FR,BR, shooterMotor;
+    public Servo servo;
     public Servo sizeChanger;
     protected IMU Imu;
     public FtcDashboard dashboard;
     public Limelight3A ll;
+    public TouchSensor magnetLimit;
 
     void initialize() {
         FL = hardwareMap.get(DcMotorEx.class, "FL");
@@ -40,24 +43,20 @@ public abstract class OpMode extends LinearOpMode {
         BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        shooterMotor = hardwareMap.get(DcMotorEx.class, "shooter");
-        shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        shooterMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        sizeChanger = hardwareMap.get(Servo.class, "shooter size changer");
-
         Imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
         Imu.initialize(parameters);
         Imu.resetYaw();
-        ll = hardwareMap.get(Limelight3A.class, "LimeLight");
-        ll.setPollRateHz(100);
-        ll.pipelineSwitch(2);
-        dashboard = FtcDashboard.getInstance();
-        dashboard.startCameraStream(ll, 60);
-        telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry(), PanelsTelemetry.INSTANCE.getFtcTelemetry());
+
+        magnetLimit = hardwareMap.get(TouchSensor.class, "hall");
+//        ll = hardwareMap.get(Limelight3A.class, "LimeLight");
+//        ll.setPollRateHz(100);
+//        ll.pipelineSwitch(2);
+//        dashboard = FtcDashboard.getInstance();
+//        dashboard.startCameraStream(ll, 60);
+//        telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry(), PanelsTelemetry.INSTANCE.getFtcTelemetry());
     }
 
     @Override
