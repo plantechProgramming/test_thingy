@@ -23,14 +23,9 @@ import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 
 public abstract class OpMode extends LinearOpMode {
 
-    public DcMotorEx FL,BL,FR,BR, shooterMotor;
-    public Servo servo;
-    public Servo sizeChanger;
-    protected IMU Imu;
-    public FtcDashboard dashboard;
-    public Limelight3A ll;
-    public TouchSensor magnetLimit;
 
+    public DcMotorEx FL,BL,FR,BR;
+    public GoBildaPinpointDriver pinpoint;
     void initialize() {
         FL = hardwareMap.get(DcMotorEx.class, "FL");
         FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -39,25 +34,15 @@ public abstract class OpMode extends LinearOpMode {
         BL.setDirection(DcMotorSimple.Direction.REVERSE);
         BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FR = hardwareMap.get(DcMotorEx.class, "FR");
+        FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BR = hardwareMap.get(DcMotorEx.class, "BR");
         BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        Imu = hardwareMap.get(IMU.class, "imu");
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
-        Imu.initialize(parameters);
-        Imu.resetYaw();
-
-        magnetLimit = hardwareMap.get(TouchSensor.class, "hall");
-//        ll = hardwareMap.get(Limelight3A.class, "LimeLight");
-//        ll.setPollRateHz(100);
-//        ll.pipelineSwitch(2);
-//        dashboard = FtcDashboard.getInstance();
-//        dashboard.startCameraStream(ll, 60);
-//        telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry(), PanelsTelemetry.INSTANCE.getFtcTelemetry());
+        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
+        pinpoint.resetPosAndIMU();
+        pinpoint.update();
     }
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -71,10 +56,6 @@ public abstract class OpMode extends LinearOpMode {
 
         end();
     }
-//    public void test(double x){
-//        motor.setPower(x);
-//        motor2.setPower(-x);
-//    }
     protected void postInit() {
 
     }
