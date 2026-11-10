@@ -23,9 +23,8 @@ import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 
 public abstract class OpMode extends LinearOpMode {
 
-
     public DcMotorEx FL,BL,FR,BR;
-    public GoBildaPinpointDriver pinpoint;
+//    public GoBildaPinpointDriver pinpoint;
     void initialize() {
         FL = hardwareMap.get(DcMotorEx.class, "FL");
         FL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -38,9 +37,9 @@ public abstract class OpMode extends LinearOpMode {
         BR = hardwareMap.get(DcMotorEx.class, "BR");
         BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
-        pinpoint.resetPosAndIMU();
-        pinpoint.update();
+//        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
+//        pinpoint.resetPosAndIMU();
+//        pinpoint.update();
     }
 
 
