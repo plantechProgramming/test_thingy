@@ -27,6 +27,7 @@ public abstract class OpMode extends LinearOpMode {
     protected IMU Imu;
     public FtcDashboard dashboard;
     public Limelight3A ll;
+    public GoBildaPinpointDriver pinpoint;
 
     void initialize() {
         FL = hardwareMap.get(DcMotorEx.class, "FL");
@@ -39,22 +40,8 @@ public abstract class OpMode extends LinearOpMode {
         BR = hardwareMap.get(DcMotorEx.class, "BR");
         BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
 
-        shooterMotor = hardwareMap.get(DcMotorEx.class, "shooter");
-        shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        shooterMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        sizeChanger = hardwareMap.get(Servo.class, "shooter size changer");
-
-        Imu = hardwareMap.get(IMU.class, "imu");
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
-        Imu.initialize(parameters);
-        Imu.resetYaw();
-        ll = hardwareMap.get(Limelight3A.class, "LimeLight");
-        ll.setPollRateHz(100);
-        ll.pipelineSwitch(2);
         dashboard = FtcDashboard.getInstance();
         dashboard.startCameraStream(ll, 60);
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry(), PanelsTelemetry.INSTANCE.getFtcTelemetry());

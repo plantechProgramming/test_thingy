@@ -7,28 +7,30 @@ import com.ThermalEquilibrium.homeostasis.Controllers.Feedback.BasicPID;
 import com.ThermalEquilibrium.homeostasis.Parameters.PIDCoefficients;
 import com.acmerobotics.dashboard.config.Config;
 import com.bylazar.configurables.annotations.Configurable;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Config
 @Configurable
 public class DriveTrain {
     Telemetry telemetry;
-    IMU imu;
+    GoBildaPinpointDriver pinpoint;
     private DcMotorEx BR, BL, FR, FL;
     public static double Kd, Ki, Kp = 0;
 
-    public DriveTrain(DcMotorEx BR, DcMotorEx BL, DcMotorEx FR, DcMotorEx FL, Telemetry telemetry, IMU imu) {
+    public DriveTrain(DcMotorEx BR, DcMotorEx BL, DcMotorEx FR, DcMotorEx FL, Telemetry telemetry, GoBildaPinpointDriver pinpoint) {
         this.BL = BL;
         this.BR = BR;
         this.FL = FL;
         this.FR = FR;
         this.telemetry = telemetry;
-        this.imu = imu;
+        this.pinpoint = pinpoint;
     }
 
     public void drive(double y, double x, double rx, double botHeading){
@@ -63,21 +65,16 @@ public class DriveTrain {
         FR.setPower(pow);
         BR.setPower(pow);
     }
-    PIDCoefficients coefficients = new PIDCoefficients(Kp,Ki,Kd);
-    BasicPID pid = new BasicPID(coefficients);
-    AngleController controller = new AngleController(pid);
-    public void turnToAngle(double deg){
-        double currDeg  = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-        telemetry.addData("curr angle", currDeg);
-        telemetry.addData("wanted angle", deg);
-        double errorDeg = deg - currDeg;
-        telemetry.addData("error angle", errorDeg);
-        double pow = controller.calculate(Math.toRadians(deg), Math.toRadians(currDeg));
-        telemetry.addData("pow", pow);
-        FL.setPower(-pow);
-        BL.setPower(-pow);
 
-        FR.setPower(pow);
-        BR.setPower(pow);
+    PIDCoefficients coefficients = new PIDCoefficients(Kp,Ki,Kd);
+    BasicPID controller = new BasicPID(coefficients);
+    public void moveDistanceForward(double dis){
+        double output = controller.calculate(pinpoint.getPosX(DistanceUnit.CM)+dis, pinpoint.getPosX(DistanceUnit.CM));
+        FL.setPower(output);
+        BL.setPower(output);
+
+        FR.setPower(output);
+        BR.setPower(output);
+
     }
 }
